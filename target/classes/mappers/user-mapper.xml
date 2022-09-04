@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.berkay.banking_system_security.repository.UserRepository">
+
+
+
+	<resultMap id="authoritiesJoin" type="User">
+	
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="user_password" property="password"/>
+        <result column="enabled" property="enabled"/>
+	    <result column="authorities" property="authoritiesString"/>
+	</resultMap>
+
+
+	<select id="getUserByUsername" resultMap="authoritiesJoin" >
+		
+		SELECT * FROM users WHERE username=#{username}
+		<!--
+		SELECT * FROM users as u
+		INNER JOIN authorities as a
+		on a.user_id=u.id
+		WHERE u.username=#{username}
+		
+		 -->
+	</select>
+	
+	
+	<insert id="createUser" parameterType="map">
+		INSERT INTO users(username, email, password, enabled, authorities)
+		VALUES(
+			#{username},
+			#{email}, 
+			#{password}, 
+			#{enabled}, 
+			#{authorities}
+		)
+	</insert>
+	
+	<update id="enableDisableUser" parameterType="map">
+		UPDATE users
+     	SET 
+      	enabled=#{enabledDisabled} 
+      	WHERE id = #{id};
+	</update>
+
+
+</mapper>	

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.berkay.banking_system_security.repository.BankRepository">
+
+
+
+	<resultMap id="getBank" type="Bank">
+	
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+ 
+	</resultMap>
+
+
+	<select id="getUserByUsername" resultMap="getBank" >
+		SELECT * FROM users as u
+		INNER JOIN authorities as a
+		on a.user_id=u.id
+		WHERE u.username=#{username}
+	</select>
+
+
+</mapper>	
